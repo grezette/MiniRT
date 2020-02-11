@@ -9,6 +9,25 @@ static void	ft_pars_ambiance_light(t_minirt *minirt, char **line)
 		ft_exit_error("Error\nAmbiance light is, at least, wriiten a 2 times\n", *line);
 	while ((9 <= (*line)[i] && (*line)[i] <= 13) || (*line)[i] == ' ')
 		i++;
+	minirt->alight.ratio = ft_atof(&(*line)[i]);
+	while (ft_isdigit((*line)[i]))
+		i++;
+	while ((9 <= (*line)[i] && (*line)[i] <= 13) || (*line)[i] == ' ')
+		i++;
+	while (ft_isdigit((*line)[i]))
+		minirt->alight.color.red = minirt->alight.color.red * 10 + (*line)[i++] - '0';
+	if ((*line)[i] == ',')
+		i++;
+	while (ft_isdigit((*line)[i]))
+		minirt->alight.color.green = minirt->alight.color.green * 10 + (*line)[i++] - '0';
+	if ((*line)[i] == ',')
+		i++;
+	while (ft_isdigit((*line)[i]))
+		minirt->alight.color.blue = minirt->alight.color.blue * 10 + (*line)[i++] - '0';
+	while ((9 <= (*line)[i] && (*line)[i] <= 13) || (*line)[i] == ' ')
+		i++;
+	if (minirt->alight.ratio < 0 || minirt->alight.ratio > 1 || (*line)[i])
+		ft_exit_error("Error\n Wrong character written in abiance light line", *line);
 }
 
 static void ft_pars_resolution(t_minirt *minirt, char **line)

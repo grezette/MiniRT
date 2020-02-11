@@ -61,7 +61,7 @@ SRCS_BONUS	=	ft_lstnew.c \
 
 SRCS_EVERY	=	get_next_line.c \
 				ft_power.c \
-				ft_float_atoi.c \
+				ft_atof.c \
 
 OBJS		=	$(SRCS:.c=.o)
 

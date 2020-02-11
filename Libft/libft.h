@@ -81,6 +81,6 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 int					get_next_line(int fd, char **line);
 float				ft_power(float nb, int power);
-float				ft_float_atoi(char *str);
+float				ft_atof(char *str);
 
 #endif
