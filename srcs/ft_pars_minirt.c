@@ -12,6 +12,10 @@ static void	ft_pars_ambiance_light(t_minirt *minirt, char **line)
 	minirt->alight.ratio = ft_atof(&(*line)[i]);
 	while (ft_isdigit((*line)[i]))
 		i++;
+	if ((*line)[i] == '.')
+		i++
+	while (ft_isdigit((*line)[i]))
+		i++;
 	while ((9 <= (*line)[i] && (*line)[i] <= 13) || (*line)[i] == ' ')
 		i++;
 	while (ft_isdigit((*line)[i]))
