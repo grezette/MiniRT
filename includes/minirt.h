@@ -14,4 +14,8 @@ void	ft_pars_minirt(t_minirt *minirt, char *file);
 /*utils*/
 void	ft_exit_error(char *msg, void *elem);
 
+/*parsing utils*/
+int		ft_pars_coord(t_coord *coord, char **str);
+int		ft_pars_color(t_color *color, char **str);
+
 #endif

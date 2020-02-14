@@ -7,7 +7,8 @@ LIBFT			=	Libft/libft.a
 LIBFT_DIR		=	Libft
 
 SRCS			=	./srcs/minirt.c \
-					./srcs/ft_pars_minirt.c \
+					./srcs/parsing/ft_pars_minirt.c \
+					./srcs/parsing/minirt_parsing_utils.c \
 					./srcs/minirt_utils.c \
 
 OBJS			=	$(SRCS:.c=.o)
