@@ -11,25 +11,42 @@ static void ft_pars_init(t_minirt *rt)
 	rt->cam = NULL;
 }
 
-void		ft_print_one_cam(t_camera *camera)
+void		ft_print_one_cam(t_camera *cam)
 {
-	printf("x = |%.2f|\ny = |%.2f|\nz = |%.2f|\n", camera->coord.x, camera->coord.y, camera->coord.z);
+	printf("x = |%.2f|\ny = |%.2f|\nz = |%.2f|\n", cam->coord.x, cam->coord.y, cam->coord.z);
+	printf("vx = |%.2f|\nvy = |%.2f|\nvz = |%.2f|\n", cam->vect.x, cam->vect.y, cam->vect.z);
+	printf("fov = |%.2d|\n", cam->fov);
 }
 
 t_list		*ft_pars_camera(char **line)
 {
-	t_camera	camera;
+	t_camera	cam;
+	t_list		*elem;
 	char		*tmp;
 
 	tmp = *line;
 	tmp++;
 	while ((9 <= *tmp && *tmp <= 13) ||*tmp == ' ')
 		tmp++;
-	if (ft_pars_coord(&(camera.coord), &tmp))
-		ft_exit_error("Wrong character written in some coordinates", *line);
+	if (ft_pars_coord(&(cam.coord), &tmp))
+		ft_exit_error("Error file.rt\nCamera: wrong character written in coordinates", *line);
 	while ((9 <= *tmp && *tmp <= 13) ||*tmp == ' ')
 		tmp++;
-	return (ft_lstnew(&camera));
+	if (ft_pars_coord(&(cam.vect), &tmp))
+		ft_exit_error("Error file.rt\nCamera: wrong character written in vectors", *line);
+	while ((9 <= *tmp && *tmp <= 13) ||*tmp == ' ')
+		tmp++;
+	cam.fov = ft_atoi(tmp);
+	while (ft_isdigit(*tmp))
+		tmp++;
+	while ((9 <= *tmp && *tmp <= 13) ||*tmp == ' ')
+		tmp++;
+	if (cam.vect.x < -1 || cam.vect.x > 1 || cam.vect.y < -1 || cam.vect.y > 1 ||
+			cam.vect.z < -1 || cam.vect.z > 1 || *tmp)
+		ft_exit_error("Error file.rt\nCamera: wrong character/data in line", *line);
+	if (!(elem = ft_lstnew(&cam)))
+		ft_exit_error("Error ft_lstnew\nCamera: malloc() didn't worked", *line);
+	return (elem);
 }
 
 static void	ft_pars_ambiance_light(t_minirt *rt, char **line)
@@ -95,19 +112,19 @@ static void	ft_pars_affect(t_minirt *rt, char **line)
 		ft_print_one_cam((t_camera *)rt->cam->content);
 	}
 	/*else if (**line == 'l')
-		ft_pars_light(rt, line);
-	else if ((*line)[0] == 'p' && (*line)[1] == 'l')
-		ft_pars_plane(rt, line);
-	else if ((*line)[0] == 's' && (*line)[1] == 'p')
-		ft_pars_sphere(rt, line);
-	else if ((*line)[0] == 's' && (*line)[1] == 'q')
-		ft_pars_square(rt, line);
-	else if ((*line)[0] == 'c' && (*line)[1] == 'y')
-		ft_pars_cylinder(rt, line);
-	else if ((*line)[0] == 't' && (*line)[1] == 'r')
-		ft_pars_triangle(rt, line);
-	*/else
-		ft_exit_error("Error\nLine not identified\n", *line);
+	  ft_pars_light(rt, line);
+	  else if ((*line)[0] == 'p' && (*line)[1] == 'l')
+	  ft_pars_plane(rt, line);
+	  else if ((*line)[0] == 's' && (*line)[1] == 'p')
+	  ft_pars_sphere(rt, line);
+	  else if ((*line)[0] == 's' && (*line)[1] == 'q')
+	  ft_pars_square(rt, line);
+	  else if ((*line)[0] == 'c' && (*line)[1] == 'y')
+	  ft_pars_cylinder(rt, line);
+	  else if ((*line)[0] == 't' && (*line)[1] == 'r')
+	  ft_pars_triangle(rt, line);
+	 */else
+	ft_exit_error("Error\nLine not identified\n", *line);
 }
 
 void		ft_pars_minirt(t_minirt *rt, char *file)

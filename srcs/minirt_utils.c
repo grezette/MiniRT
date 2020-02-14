@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "../includes/minirt.h"
 
 void	ft_exit_error(char *msg, void *elem)
