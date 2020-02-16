@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 19:35:14 by grezette          #+#    #+#             */
+/*   Updated: 2020/02/16 16:02:00 by grezette         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 float	ft_atof(char *str)
 {
-	int 	i;
+	int		i;
 	float	at;
 	float	of;
 	int		minus;
-	int 	aftr;
+	int		aftr;
 
 	aftr = 1;
 	at = 0;
@@ -16,11 +28,8 @@ float	ft_atof(char *str)
 	while ((9 <= str[i] && str[i] <= 13) || str[i] == ' ')
 		i++;
 	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
+		if (str[i++] == '-')
 			minus = -1;
-		i++;
-	}
 	while (ft_isdigit(str[i]))
 		at = at * 10 + str[i++] - '0';
 	if (str[i] == '.')

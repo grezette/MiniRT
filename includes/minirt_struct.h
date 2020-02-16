@@ -1,91 +1,106 @@
-# ifndef MINIRT_STRUCT_H
-#define MINIRT_STRUCT_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt_struct.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/16 15:55:40 by grezette          #+#    #+#             */
+/*   Updated: 2020/02/16 15:59:01 by grezette         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-typedef struct 	s_resolution
+#ifndef MINIRT_STRUCT_H
+# define MINIRT_STRUCT_H
+
+enum					e_objects
 {
-	int			x;
-	int			y;
-}				t_resolution;
+						LIGHT,
+						SPHERE,
+						PLANE,
+						SQUARE,
+						CYLINDER,
+						TRIANGLE
+};
 
-typedef struct	s_color
+typedef struct			s_resolution
 {
-	int			red;
-	int			green;
-	int			blue;
-}				t_color;
+	int					x;
+	int					y;
+}						t_resolution;
 
-typedef struct 	s_amblight
+typedef struct			s_color
 {
-	float		ratio;
-	t_color		color;
-	
-}				t_amblight;
+	int					red;
+	int					green;
+	int					blue;
+}						t_color;
 
-typedef struct	s_coord
+typedef struct			s_amblight
 {
-	float		x;
-	float		y;
-	float		z;
-}				t_coord;
+	float				ratio;
+	t_color				color;
+}						t_amblight;
 
-typedef	struct 	s_camera
+typedef struct			s_coord
 {
-	t_coord		coord;
-	t_coord		vect;
-	int			fov;
-}				t_camera;
+	float				x;
+	float				y;
+	float				z;
+}						t_coord;
 
-typedef	struct	s_light_or_sphere
+typedef	struct			s_camera
 {
-	char		*name;
-	t_coord		coord;
-	float		r;
-	t_color		color;
-}				t_lignt_or_sphere;
+	t_coord				coord;
+	t_coord				vect;
+	int					fov;
+}						t_camera;
 
-typedef	struct	s_plane
+typedef	struct			s_square
 {
-	char		*name;
-	t_coord		coord;
-	t_coord		vect;
-	t_color		color;
-}				t_plane;
+	t_coord				vect;
+	float				height;
+}						t_square;
 
-typedef	struct	s_square
+typedef	struct			s_cylinder
 {
-	char		*name;
-	t_coord		coord;
-	t_coord		vect;
-	float		height;
-	t_color		color;
-}				t_square;
+	t_coord				vect;
+	float				diam;
+	float				height;
+}						t_cylinder;
 
-typedef	struct	s_cylinder
+typedef	struct			s_triangle
 {
-	char		*name;
-	t_coord		coord;
-	t_coord		vect;
-	float		diam;
-	float		height;
-	t_color		color;
-}				t_cylinder;
+	t_coord				sndpoint;
+	t_coord				trdpoint;
+}						t_triangle;
 
-typedef	struct	s_triangle
+typedef	struct			s_union
 {
-	char		*name;
-	t_coord		fstpoint;
-	t_coord		sndpoint;
-	t_coord		trdpoint;
-}				t_triangle;
+	//le r c'est pour le diametre/ration de la sphere ou de la light
+	float				r;
+	// Le plane c'est pour le vecteur du plane;
+	t_coord				plane;
+	t_square			square;
+	t_cylinder			cylinder;
+	t_triangle			triangle;
+}						t_union;
 
-/*On test avec une struct de liste chainee*/
-
-typedef	struct		s_minirt
+typedef struct			s_object
 {
-	t_resolution	reso;
-	t_amblight		alight;
-	t_list			*cam;
-	t_list			*obj;
-}					t_minirt;
+	int					type;
+	t_coord				coord;
+	t_color				color;
+	t_union				*obj;
+	//rajouter un pointeur sur fonction
+}						t_object;
+
+typedef	struct			s_minirt
+{
+	t_resolution		reso;
+	t_amblight			alight;
+	t_list				*cam;
+	t_list				*obj;
+}						t_minirt;
 
 #endif

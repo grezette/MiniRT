@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
+/*   minirt_pars_objects.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/15 19:34:56 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 15:59:47 by grezette         ###   ########.fr       */
+/*   Created: 2020/02/16 16:10:50 by grezette          #+#    #+#             */
+/*   Updated: 2020/02/16 16:22:38 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "../../includes/minirt.h"
 
-int		main(int ac, char **av)
+t_list	*ft_pars_light(t_minirt *rt, char **line)
 {
-	t_minirt	minirt;
-
-	(void)ac;
-	ft_pars_minirt(&minirt, av[1]);
-	return (0);
+	
 }

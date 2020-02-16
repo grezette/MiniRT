@@ -7,9 +7,11 @@ LIBFT			=	Libft/libft.a
 LIBFT_DIR		=	Libft
 
 SRCS			=	./srcs/minirt.c \
-					./srcs/parsing/ft_pars_minirt.c \
-					./srcs/parsing/minirt_parsing_utils.c \
 					./srcs/minirt_utils.c \
+					./srcs/parsing/ft_pars_minirt.c \
+					./srcs/parsing/minirt_pars_objects.c \
+					./srcs/parsing/minirt_parsing_utils.c \
+					./srcs/parsing/print_parsing.c \
 
 OBJS			=	$(SRCS:.c=.o)
 
@@ -22,6 +24,7 @@ CC      		=   gcc
 CFLAGS       	=   -Wall -Wextra -Werror -g
 
 LIBS			=	-lSDLmain -lSDL -L./Libft -lft
+#LIBS			=	-framework OpenGL -framework AppKit -L./libft -lft
 
 all:			$(LIBFT) $(NAME)
 
