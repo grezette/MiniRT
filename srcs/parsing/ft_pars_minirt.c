@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:34:28 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 16:14:09 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:06:56 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ static t_list	*ft_pars_camera(t_minirt *rt, char **line)
 	char		*tmp;
 
 	if (!(cam = (t_camera *)malloc(sizeof(t_camera))))
-		ft_exit_error("Failed dring pars_camera", *line, rt);
+		ft_exit_error("Failed mallocing cam", *line, rt);
 	tmp = *line;
 	tmp++;
 	if (ft_pars_coord(&(cam->coord), &tmp))
 		ft_exit_error("Camera: wrong character written in coord", *line, rt);
 	if (ft_pars_coord(&(cam->vect), &tmp))
 		ft_exit_error("Camera: wrong character written in vectors", *line, rt);
-	while ((9 <= *tmp && *tmp <= 13) || *tmp == ' ')
-		tmp++;
 	cam->fov = ft_atoi(tmp);
 	while (ft_isdigit(*tmp))
 		tmp++;
@@ -37,7 +35,7 @@ static t_list	*ft_pars_camera(t_minirt *rt, char **line)
 			cam->vect.y > 1 || cam->vect.z < -1 || cam->vect.z > 1 || *tmp)
 		ft_exit_error("Camera: wrong character/data in line", *line, rt);
 	if (!(elem = ft_lstnew(cam)))
-		ft_exit_error("Camera: malloc() didn't worked", *line, rt);
+		ft_exit_error("Camera: ft_lstnew() didn't worked", *line, rt);
 	return (elem);
 }
 
@@ -62,8 +60,6 @@ static void	ft_pars_ambiance_light(t_minirt *rt, char **line)
 		tmp++;
 	if (ft_pars_color(&(rt->alight.color), &tmp))
 		ft_exit_error("Amb light: Wrong character written in color", *line, rt);
-	while ((9 <= *tmp && *tmp <= 13) || *tmp == ' ')
-		tmp++;
 	if (rt->alight.ratio < 0 || rt->alight.ratio > 1 || *tmp)
 		ft_exit_error("Amb light: Wrong ratio or wrong character", *line, rt);
 }
@@ -101,7 +97,7 @@ static void	ft_pars_affect(t_minirt *rt, char **line)
 	else if (**line == 'c')
 		ft_lstadd_back(&(rt->cam), ft_pars_camera(rt, line));
 	else if (**line == 'l')
-	  	ft_lstadd_back(&(rt->obj), ft_pars_light(rt, line));
+	  	ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, LIGHT, line));
 	 /* else if ((*line)[0] == 'p' && (*line)[1] == 'l')
 	  ft_pars_plane(rt, line);
 	  else if ((*line)[0] == 's' && (*line)[1] == 'p')
@@ -135,6 +131,7 @@ void		ft_pars_minirt(t_minirt *rt, char *file)
 	}
 	if (*line)
 		ft_pars_affect(rt, &line);
+	//Le free peut peut-etre abort dans le cadre d'un fichier texte ne finissant pas sur un '\n'
 	free(line);
 	if (close(fd) == -1)
 		ft_exit_error("Couldn't close the file\n", NULL, rt);

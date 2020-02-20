@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:34:46 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 16:00:33 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:06:52 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int				ft_pars_color(t_color *color, char **str)
 		(*str)++;
 	if (**str == ',')
 		(*str)++;
-	if ((9 <= **str && **str <= 13) || **str == ' ' || !(**str))
-		return (0);
-	return (-1);
+	while ((9 <= **str && **str <= 13) || **str == ' ')
+		(*str)++;
+	return (0);
 }

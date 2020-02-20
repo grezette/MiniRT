@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 15:55:40 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 15:59:01 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:06:58 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct			s_object
 	int					type;
 	t_coord				coord;
 	t_color				color;
-	t_union				*obj;
+	t_union				*spe;
 	//rajouter un pointeur sur fonction
 }						t_object;
 

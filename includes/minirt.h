@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 15:55:34 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 16:14:07 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/20 17:00:27 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_pars_minirt(t_minirt *minirt, char *file);
 void	ft_exit_error(char *msg, void *elem, t_minirt *rt);
 
 /*parsing objects*/
-t_list	*ft_pars_light(t_minirt *rt, char **line);
+t_list	*ft_pars_obj(t_minirt *rt, int type, char **line, void (*f)(char **, t_union *));
 
 /*parsing utils*/
 int		ft_pars_coord(t_coord *coord, char **str);
