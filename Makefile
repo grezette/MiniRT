@@ -23,8 +23,8 @@ CC      		=   gcc
 
 CFLAGS       	=   -Wall -Wextra -Werror -g
 
-LIBS			=	-lSDLmain -lSDL -L./Libft -lft
-#LIBS			=	-framework OpenGL -framework AppKit -L./libft -lft
+#LIBS			=	-lSDLmain -lSDL -L./Libft -lft
+LIBS			=	-framework OpenGL -framework AppKit -L./libft -lft
 
 all:			$(LIBFT) $(NAME)
 
