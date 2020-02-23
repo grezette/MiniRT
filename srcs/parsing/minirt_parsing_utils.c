@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:34:46 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/22 16:16:04 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/23 13:54:11 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void			ft_pars_init(t_minirt *rt)
 	rt->reso.x = -1;
 	rt->reso.y = 0;
 	rt->alight.ratio = 2;
-	rt->alight.color.red = 0;
-	rt->alight.color.green = 0;
-	rt->alight.color.blue = 0;
 	rt->cam = NULL;
 	rt->obj = NULL;
 }
@@ -91,4 +88,29 @@ int				ft_pars_color(t_color *color, char **str)
 	while ((9 <= **str && **str <= 13) || **str == ' ')
 		(*str)++;
 	return (0);
+}
+
+t_list	*ft_pars_obj(t_minirt *rt, int type, char **line, int (*f)(char **, t_union *))
+{
+	t_object	*obj;
+	t_list		*elem;
+	char		*tmp;
+
+	if (!(obj = (t_object *)malloc(sizeof(t_object))))
+		ft_exit_error("Object: Failled mallocing obj", *line, rt);
+	if (!(obj->spe = (t_union *)malloc(sizeof(t_union))))
+		ft_exit_error("Object: Failled mallocing spe", *line, rt);
+	obj->type = type;
+	tmp = *line;
+	while (ft_isalpha(*tmp))
+		tmp++;
+	if (ft_pars_coord(&(obj->coord), &tmp))
+		ft_exit_error("Object: wrong caracter written in coord", *line, rt);
+	if ((*f)(&tmp, obj->spe))
+		ft_exit_error("Object: bad char between coord and color", *line, rt);
+	if (ft_pars_color(&(obj->color), &tmp))
+		ft_exit_error("Object: Wrong character written in color", *line, rt);
+	if (!(elem = ft_lstnew(obj)))
+		ft_exit_error("Object: ft_lstnew() didn't worked", *line, rt);
+	return (elem);
 }

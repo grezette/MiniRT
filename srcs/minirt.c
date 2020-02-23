@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:34:56 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/16 15:59:47 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/23 13:59:10 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int		main(int ac, char **av)
 {
-	t_minirt	minirt;
+	t_minirt	rt;
 
-	(void)ac;
-	ft_pars_minirt(&minirt, av[1]);
+	if (ac > 3)
+		ft_exit_error("Too many argument specified", NULL, &rt);
+	ft_pars_minirt(&rt, av[1]);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:33:48 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/22 18:15:37 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/23 13:36:18 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,36 @@
 
 void		ft_print_reso(t_resolution reso)
 {
-	printf("R: ");
-	printf("|%d| |%d|\n", reso.x, reso.y);
+	printf("R:\t\t\t\t");
+	printf("%d %d\n", reso.x, reso.y);
 }
 
 void		ft_print_color(t_color color)
 {
-	printf(" |%d|", color.red);
-	printf(",|%d|", color.green);
-	printf(",|%d|", color.blue);
+	printf("\t%d", color.red);
+	printf(",%d", color.green);
+	printf(",%d", color.blue);
 }
 
 void		ft_print_amblight(t_amblight alight)
 {
-	printf("A: ");
-	printf("|%f|", alight.ratio);
+	printf("A:\t\t\t\t");
+	printf("%f\t\t\t\t\t\t\t\t\t\t", alight.ratio);
 	ft_print_color(alight.color);
+	printf("\n");
 }
 
 void		ft_print_coord(t_coord coord)
 {
-	printf(" |%f|", coord.x);
-	printf(",|%f|", coord.y);
-	printf(",|%f|", coord.z);
+	printf(" %f", coord.x);
+	printf(",%f", coord.y);
+	printf(",%f\t", coord.z);
 }
 
 void		ft_print_one_cam(t_camera *cam)
 {
 	ft_print_coord(cam->coord);
-	printf(" |%.2d|\n", cam->fov);
+	printf(" %.2d\n", cam->fov);
 }
 
 void		ft_print_all_cam(t_list *camera)
@@ -50,9 +51,10 @@ void		ft_print_all_cam(t_list *camera)
 	int i;
 
 	i = 0;
+	printf("\n");
 	while (camera)
 	{
-		printf("\nc n*%3d: ", i++);
+		printf("c n*%3d:\t\t", i++);
 		ft_print_one_cam((t_camera *)camera->content);
 		camera = camera->next;
 	}
@@ -61,33 +63,43 @@ void		ft_print_all_cam(t_list *camera)
 void		ft_print_one_obj(t_object *obj)
 {
 	if (obj->type == 0)
-		printf("LIGHT");
+		printf("LIGHT\t");
 	else if (obj->type == 1)
-		printf("SPHERE");
+		printf("SPHERE\t");
 	else if (obj->type == 2)
-		printf("PLANE");
+		printf("PLANE\t");
 	else if (obj->type == 3)
-		printf("SQUARE");
+		printf("SQUARE\t");
 	else if (obj->type == 4)
-		printf("CYLINDER");
+		printf("CYLINDER\t");
 	else if (obj->type == 5)
-		printf("TRIANGLE");
+		printf("TRIANGLE\t");
 	ft_print_coord(obj->coord);
 	if (obj->type == 0)
-		printf(" |%f|", obj->spe->r);
+		printf(" %f\t\t\t\t\t\t\t", obj->spe->r);
 	else if (obj->type == 1)
-		printf(" |%f|", obj->spe->r);
+		printf(" %f\t\t\t\t\t\t\t", obj->spe->r);
 	else if (obj->type == 2)
+	{
 		ft_print_coord(obj->spe->plane);
+		printf("\t\t\t\t");
+	}
 	else if (obj->type == 3)
 	{
 		ft_print_coord(obj->spe->square.vect);
-		printf(" |%f|", obj->spe->square.height);
+		printf(" %f\t\t\t", obj->spe->square.height);
 	}
 	else if (obj->type == 4)
-		printf("CYLINDER");
+	{
+		ft_print_coord(obj->spe->cylinder.vect);
+		printf(" %f\t", obj->spe->cylinder.diam);
+		printf(" %f\t", obj->spe->cylinder.height);
+	}
 	else if (obj->type == 5)
-		printf("TRIANGLE");
+	{
+		ft_print_coord(obj->spe->triangle.sndpoint);
+		ft_print_coord(obj->spe->triangle.trdpoint);
+	}
 	ft_print_color(obj->color);
 }
 

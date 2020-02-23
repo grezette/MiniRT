@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/16 16:10:50 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/22 18:18:24 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/23 13:54:25 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,32 @@ int		ft_pars_square(char **str, t_union *spe)
 	return (0);
 }
 
-t_list	*ft_pars_obj(t_minirt *rt, int type, char **line, int (*f)(char **, t_union *))
+int		ft_pars_cylinder(char **str, t_union *spe)
 {
-	t_object	*obj;
-	t_list		*elem;
-	char		*tmp;
+	if (ft_pars_coord(&(spe->cylinder.vect), str))
+		return (-1);
+	spe->cylinder.diam = ft_pars_coord_float(str);
+	while ((9 <= **str && **str <= 13) || **str == ' ')
+		(*str)++;
+	spe->cylinder.height = ft_pars_coord_float(str);
+	while ((9 <= **str && **str <= 13) || **str == ' ')
+		(*str)++;
+	if (spe->cylinder.vect.x < 0 || spe->cylinder.vect.x > 1 ||
+			spe->cylinder.vect.y < 0 || spe->cylinder.vect.y > 1 ||
+			spe->cylinder.vect.z < 0 || spe->cylinder.vect.z > 1 ||
+			spe->cylinder.diam < 0 || spe->cylinder.height < 0 ||
+			!(ft_isdigit(**str)))
+		return (-1);
+	return (0);
+}
 
-	if (!(obj = (t_object *)malloc(sizeof(t_object))))
-		ft_exit_error("Object: Failled mallocing obj", *line, rt);
-	if (!(obj->spe = (t_union *)malloc(sizeof(t_union))))
-		ft_exit_error("Object: Failled mallocing spe", *line, rt);
-	obj->type = type;
-	tmp = *line;
-	while (ft_isalpha(*tmp))
-		tmp++;
-	if (ft_pars_coord(&(obj->coord), &tmp))
-		ft_exit_error("Object: wrong caracter written in coord", *line, rt);
-	if ((*f)(&tmp, obj->spe))
-		ft_exit_error("Object: bad char between coord and color", *line, rt);
-	if (ft_pars_color(&(obj->color), &tmp))
-		ft_exit_error("Object: Wrong character written in color", *line, rt);
-	if (!(elem = ft_lstnew(obj)))
-		ft_exit_error("Object: ft_lstnew() didn't worked", *line, rt);
-	return (elem);
+int		ft_pars_triangle(char **str, t_union *spe)
+{
+	if (ft_pars_coord(&(spe->triangle.sndpoint), str))
+		return (-1);
+	if (ft_pars_coord(&(spe->triangle.trdpoint), str))
+		return (-1);
+	if (!(ft_isdigit(**str)))
+		return (-1);
+	return (0);
 }

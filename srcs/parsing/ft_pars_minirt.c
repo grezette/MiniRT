@@ -6,7 +6,7 @@
 /*   By: grezette <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 19:34:28 by grezette          #+#    #+#             */
-/*   Updated: 2020/02/22 18:14:39 by grezette         ###   ########.fr       */
+/*   Updated: 2020/02/23 13:47:02 by grezette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,16 @@ static void	ft_pars_affect(t_minirt *rt, char **line)
 		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, LIGHT, line, *ft_pars_light));
 	else if ((*line)[0] == 'p' && (*line)[1] == 'l')
 		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, PLANE, line, *ft_pars_plane));
-	 else if ((*line)[0] == 's' && (*line)[1] == 'p')
-		 ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, SPHERE, line, *ft_pars_sphere));
+	else if ((*line)[0] == 's' && (*line)[1] == 'p')
+		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, SPHERE, line, *ft_pars_sphere));
 	else if ((*line)[0] == 's' && (*line)[1] == 'q')
-		 ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, SQUARE, line, *ft_pars_square));
-	/*  else if ((*line)[0] == 'c' && (*line)[1] == 'y')
-	  ft_pars_cylinder(rt, line);
-	  else if ((*line)[0] == 't' && (*line)[1] == 'r')
-	  ft_pars_triangle(rt, line);
-	  */else
-	 {
-		 ft_print_file(rt);
+		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, SQUARE, line, *ft_pars_square));
+	else if ((*line)[0] == 'c' && (*line)[1] == 'y')
+		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, CYLINDER, line, *ft_pars_cylinder));
+	else if ((*line)[0] == 't' && (*line)[1] == 'r')
+		ft_lstadd_back(&(rt->obj), ft_pars_obj(rt, TRIANGLE, line, *ft_pars_triangle));
+	else
 		ft_exit_error("Line not identified\n", *line, rt);
-	 }
 }
 
 void		ft_pars_minirt(t_minirt *rt, char *file)
@@ -138,4 +135,6 @@ void		ft_pars_minirt(t_minirt *rt, char *file)
 	free(line);
 	if (close(fd) == -1)
 		ft_exit_error("Couldn't close the file\n", NULL, rt);
+	if (rt->reso.x == -1 || rt->alight.ratio == 2)
+		ft_exit_error("File .rt: not enough data", NULL, rt);
 }
